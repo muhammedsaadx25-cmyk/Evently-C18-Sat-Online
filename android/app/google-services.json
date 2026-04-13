@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "836667225996",
+    "project_id": "evently-c18-sat-online",
+    "storage_bucket": "evently-c18-sat-online.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836667225996:android:455c71409f4c56ca8308a9",
+        "android_client_info": {
+          "package_name": "com.example.evently_sat_online"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOMO20kHief_C73mbVLfo0J6y1vtRFcOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

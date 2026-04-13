@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.validator,
     this.isSecure = false,
+    this.maxLines = 1,
   });
 
   String hintText;
@@ -17,10 +18,12 @@ class CustomTextFormField extends StatelessWidget {
   TextEditingController? controller;
   String? Function(String?)? validator ;
   bool isSecure;
-
+int maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
+
       obscureText: isSecure,
       validator: validator,
       controller: controller,

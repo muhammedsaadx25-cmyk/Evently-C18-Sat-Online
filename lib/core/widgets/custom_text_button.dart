@@ -1,3 +1,4 @@
+import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -9,6 +10,10 @@ VoidCallback? onTap;
   Widget build(BuildContext context) {
     return  InkWell(
         onTap:onTap,
-        child: Text(title, textAlign: align,style: Theme.of(context).textTheme.labelSmall,));
+        child: Text(title,
+
+          textAlign: align,style: Theme.of(context).textTheme.titleLarge,
+
+         ));
   }
 }
