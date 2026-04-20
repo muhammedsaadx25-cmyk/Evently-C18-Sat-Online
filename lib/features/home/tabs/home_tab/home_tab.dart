@@ -1,4 +1,5 @@
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
+import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/core/widgets/custom_tab_bar.dart';
 import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/widgets/event_item.dart';
+import '../../../event_detail/event_detail_screen.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -84,7 +86,9 @@ late CategoryModel selectedCategory = CategoryModel.getCategoriesWithAll(context
                           vertical: 24,
                         ),
                         itemBuilder: (context, index) =>
-                            EventItem(event: events[index], markAsFavourite: UserModel.currentUser!.favouriteEventsIds.contains(events[index].id),),
+                            EventItem(onclick: (){
+                              Navigator.pushNamed(context, RoutesManager.eventDetails, arguments: events[index]);
+                            }, event: events[index], markAsFavourite: UserModel.currentUser!.favouriteEventsIds.contains(events[index].id),),
 
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 16.h),

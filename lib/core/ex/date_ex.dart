@@ -9,4 +9,10 @@ extension DateTimeEx on DateTime{
   String get getMonth=>
       DateFormat('dd-MMM').format(this);
 
+  String get getTimeWithMarker=>
+      DateFormat('hh:mm a').format(this);
+
+  String get getDayWithFullMonthName =>
+      DateFormat('dd MMMM').format(this);
+
 }

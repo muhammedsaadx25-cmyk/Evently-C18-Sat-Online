@@ -1,6 +1,7 @@
 import 'package:evently_sat_online/config/theme/theme_manager.dart';
 import 'package:evently_sat_online/core/prefs_manager/prefs_manager.dart';
 import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
+import 'package:evently_sat_online/features/event_detail/event_detail_provider.dart';
 import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/model/user_model.dart';
@@ -25,6 +26,7 @@ void main() async{
       providers: [
         ChangeNotifierProvider(create: (_)=> ThemeProvider()),
         ChangeNotifierProvider(create: (_)=> LangProvider()),
+        ChangeNotifierProvider(create: (_) => EventDetailProvider())
       ],
       child: const Evenlty()));
 }
