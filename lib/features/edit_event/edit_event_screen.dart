@@ -65,7 +65,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appLocalizations.add_event),
+        title: Text(appLocalizations.update_event),
       ),
       body: SingleChildScrollView(
         child: Padding(

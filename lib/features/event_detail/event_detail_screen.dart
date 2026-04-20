@@ -42,7 +42,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     print("===> event detail screen event: $event");
     return Scaffold(
       appBar: AppBar(
-        title: Text(appLocalizations.add_event),
+        title: Text(appLocalizations.event),
         actions: [
           UserModel.currentUser!.id == widget.event.ownerId
               ? IconButton(
