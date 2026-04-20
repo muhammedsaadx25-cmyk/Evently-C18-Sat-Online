@@ -25,6 +25,12 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    widget.event = Provider.of<EventDetailProvider>(context).currentEvent ?? widget.event;
+  }
+  @override
   void deactivate() {
     super.deactivate();
     Provider.of<EventDetailProvider>(context, listen: false).updateEvent(null);
@@ -33,6 +39,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   Widget build(BuildContext context) {
     EventDetailProvider eventDetailProvider = Provider.of<EventDetailProvider>(context);
     EventModel? event = eventDetailProvider.currentEvent ?? widget.event;
+    print("===> event detail screen event: $event");
     return Scaffold(
       appBar: AppBar(
         title: Text(appLocalizations.add_event),

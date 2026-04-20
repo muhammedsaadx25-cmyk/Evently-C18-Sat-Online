@@ -52,7 +52,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             unSelectedFgColor: ColorsManager.black,
             isSelected:
             widget.categories.indexOf(category) ==
-                selectedIndex,
+                widget.selectedCategoryIndex,
           ),
         )
             .toList(),

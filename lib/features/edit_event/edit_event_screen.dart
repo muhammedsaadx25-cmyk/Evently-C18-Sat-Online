@@ -31,6 +31,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   late CategoryModel selectedCategory = CategoryModel.getCategories(context)[0];
   late TextEditingController _titleController ;
   late TextEditingController _descriptionController ;
+  int selectedCategoryIndex = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -46,7 +47,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
         _descriptionController.text = widget.currentEvent.description ?? "";
         selectedDateTime = widget.currentEvent.dateTime ?? DateTime.now();
         pickedTime = TimeOfDay.fromDateTime(selectedDateTime);
-        selectedCategory = CategoryModel.getCategories(context).firstWhere((category) => category.id == widget.currentEvent.category?.id);
+        selectedCategory = widget.currentEvent.category ?? CategoryModel.getCategories(context)[0];
+        selectedCategoryIndex = int.parse(widget.currentEvent.category!.id) - 1;
 
   }
   @override
@@ -59,6 +61,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   @override
   Widget build(BuildContext context) {
 
+    print("===> selected category edit screen: $selectedCategory");
 
     return Scaffold(
       appBar: AppBar(
@@ -78,10 +81,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
         
               CustomTabBar(
                 categories: CategoryModel.getCategories(context),
-                selectedCategoryIndex: int.parse(widget.currentEvent.category!.id) ?? 0,
+                selectedCategoryIndex: selectedCategoryIndex,
                 onCategoryItemClicked: (newCategory){
                 setState(() {
                   selectedCategory = newCategory;
+                  selectedCategoryIndex = int.parse(newCategory.id) - 1;
                   print("===> selected new category: $newCategory");
                 });
                 print(newCategory.name);
@@ -142,7 +146,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         category: selectedCategory,
         title: _titleController.text,
         description: _descriptionController.text,
-        dateTime: selectedDateTime == widget.currentEvent.dateTime ? DateTime.now() : selectedDateTime);
+        dateTime: DateTime.now());
     print("===> updated event: $updatedEvent");
     await FirebaseService.updateEvent(updatedEvent, context);
     if (!mounted) return;
