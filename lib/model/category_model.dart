@@ -40,4 +40,10 @@ Map<String, dynamic> toJson()=>{
     ];
      return categories;
   }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'CategoryModel(id: $id, name: $name, icon: $icon, image: $image)';
+  }
 }

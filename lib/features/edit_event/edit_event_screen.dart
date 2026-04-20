@@ -82,7 +82,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                 onCategoryItemClicked: (newCategory){
                 setState(() {
                   selectedCategory = newCategory;
-        
+                  print("===> selected new category: $newCategory");
                 });
                 print(newCategory.name);
               },),
@@ -143,6 +143,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         title: _titleController.text,
         description: _descriptionController.text,
         dateTime: selectedDateTime == widget.currentEvent.dateTime ? DateTime.now() : selectedDateTime);
+    print("===> updated event: $updatedEvent");
     await FirebaseService.updateEvent(updatedEvent, context);
     if (!mounted) return;
     Provider.of<EventDetailProvider>(context, listen: false).updateEvent(updatedEvent);

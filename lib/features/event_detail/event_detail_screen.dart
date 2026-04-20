@@ -23,19 +23,12 @@ class EventDetailScreen extends StatefulWidget {
 class _EventDetailScreenState extends State<EventDetailScreen> {
   late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
+
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+  void deactivate() {
+    super.deactivate();
     Provider.of<EventDetailProvider>(context, listen: false).updateEvent(null);
-
   }
-
   @override
   Widget build(BuildContext context) {
     EventDetailProvider eventDetailProvider = Provider.of<EventDetailProvider>(context);
