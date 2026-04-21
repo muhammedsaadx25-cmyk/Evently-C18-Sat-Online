@@ -46,69 +46,96 @@ bool securePassword = true;
       body: SafeArea(
         child: Padding(
           padding: REdgeInsets.symmetric(horizontal: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(ImageAssets.evenltyLogo, color: ColorsManager.blue,),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.asset(ImageAssets.evenltyLogo, color: ColorsManager.blue,),
 
-                Text(
-                 appLocalizations.login_to_your_account,
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-                SizedBox(height: 24.h),
+                  Text(
+                   appLocalizations.login_to_your_account,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  SizedBox(height: 24.h),
 
-                CustomTextFormField(
-                  validator: Validator.validateEmail,
-                  controller: _emailController,
-                  hintText: appLocalizations.enter_your_email,
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-                SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    validator: Validator.validateEmail,
+                    controller: _emailController,
+                    hintText: appLocalizations.enter_your_email,
+                    prefixIcon: Icon(Icons.email_outlined),
+                  ),
+                  SizedBox(height: 16.h),
 
-                CustomTextFormField(
-                  isSecure: securePassword,
-                  validator: Validator.validatePassword,
-                  controller: _passwordController,
-                  hintText: appLocalizations.enter_your_password,
-                  prefixIcon: Icon(Icons.lock_clock_outlined),
-                  suffixIcon:IconButton(onPressed: (){
-                    setState(() {
-                    securePassword = !securePassword; // f
+                  CustomTextFormField(
+                    isSecure: securePassword,
+                    validator: Validator.validatePassword,
+                    controller: _passwordController,
+                    hintText: appLocalizations.enter_your_password,
+                    prefixIcon: Icon(Icons.lock_clock_outlined),
+                    suffixIcon:IconButton(onPressed: (){
+                      setState(() {
+                      securePassword = !securePassword; // f
 
-                    });
-                  }, icon: Icon(securePassword ? Icons.visibility_off : Icons.visibility)),
-                ),
-                SizedBox(height: 8.h),
-                CustomTextButton(
-                  title: appLocalizations.forget_password,
-                  align: TextAlign.end,
-                ),
+                      });
+                    }, icon: Icon(securePassword ? Icons.visibility_off : Icons.visibility)),
+                  ),
+                  SizedBox(height: 8.h),
+                  CustomTextButton(
+                    title: appLocalizations.forget_password,
+                    align: TextAlign.end,
+                  ),
 
-                SizedBox(height: 47.h),
-                CustomElevatedButton(title: appLocalizations.login, onClick: _login,),
-                SizedBox(height: 47.h),
+                  SizedBox(height: 47.h),
+                  CustomElevatedButton(title: appLocalizations.login, onClick: _login,),
+                  SizedBox(height: 16.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        appLocalizations.dont_have_an_account,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      CustomTextButton(
+                        title:appLocalizations.sing_up,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            RoutesManager.register,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      appLocalizations.dont_have_an_account,
-                      style: Theme.of(context).textTheme.labelMedium,
+                  Row(
+                    children: [
+                      Expanded(child: Divider(color: ColorsManager.blue, thickness: 1.h, indent: 40.w, endIndent: 10.w,)),
+                      Text("OR", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: ColorsManager.blue),),
+                      Expanded(child: Divider(color: ColorsManager.blue, thickness: 1.h, indent: 10.w, endIndent: 40.w,)),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: REdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+                      side: BorderSide(color: ColorsManager.white),
                     ),
-                    CustomTextButton(
-                      title:appLocalizations.sing_up,
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          RoutesManager.register,
-                        );
-                      },
+                    onPressed: _loginWithGoogle,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("assets/images/image 6.png", height: 24.h,),
+                        SizedBox(width: 8.w,),
+                        Text("Login With Google", style: Theme.of(context).textTheme.displayLarge?.copyWith(color: ColorsManager.darkBlue),),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -133,6 +160,25 @@ bool securePassword = true;
     }catch(exception){
       DialogUtils.hideDialog(context);
       DialogUtils.showToastMessage(message: exception.toString(), bgColor: Colors.red);
+    }
+  }
+
+  void _loginWithGoogle() async {
+    try {
+      DialogUtils.showLoading(context, dismissible: false);
+      UserCredential? credential = await FirebaseService.signInWithGoogle();
+      if (credential != null) {
+        UserModel.currentUser = await FirebaseService.getUserFromFirStore(credential.user!.uid);
+        DialogUtils.hideDialog(context);
+        DialogUtils.showToastMessage(
+            message: "User Logged-In Successfully", bgColor: Colors.green);
+        Navigator.pushReplacementNamed(context, RoutesManager.homeScreen,);
+      } else {
+        DialogUtils.hideDialog(context);
+      }
+    } catch (e) {
+      DialogUtils.hideDialog(context);
+      DialogUtils.showToastMessage(message: e.toString(), bgColor: Colors.red);
     }
   }
 }
