@@ -31,4 +31,8 @@ EventModel.fromJson(Map<String, dynamic>? json, BuildContext context ) : this(
 
     };
   }
+  @override
+  String toString() {
+    return 'EventModel(ownerId: $ownerId, id: $id, title: $title, description: $description, category: $category, dateTime: $dateTime)';
+  }
 }

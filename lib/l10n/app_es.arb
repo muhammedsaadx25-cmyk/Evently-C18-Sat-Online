@@ -35,5 +35,7 @@
   "birthday": "Cumpleaños",
   "book_club": "Club de lectura",
   "all": "Todos",
-  "exhibition": "Exposición"
+  "exhibition": "Exposición",
+  "event": "Evento"
+
 }

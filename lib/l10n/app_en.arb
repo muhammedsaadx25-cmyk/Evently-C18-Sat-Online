@@ -36,6 +36,9 @@
 "birthday":"Birthday",
 "book_club":"Book Club",
 "all":"All",
-"exhibition":"Exhibition"
+"exhibition":"Exhibition",
+   "event": "Event"
+
+
 
 }

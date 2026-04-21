@@ -7,6 +7,7 @@ import 'package:evently_sat_online/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/routes_manager/routes_manager.dart';
 import '../../../../core/widgets/event_item.dart';
 
 class FavouriteTab extends StatelessWidget {
@@ -18,40 +19,48 @@ class FavouriteTab extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding:  REdgeInsets.all(8.0),
+        padding: REdgeInsets.all(8.0),
         child: Column(
           children: [
-            CustomTextFormField(hintText: appLocalizations.search_for_event, suffixIcon: Icon(Icons.search),),
-            SizedBox(height: 16.h,),
-            FutureBuilder(future: FirebaseService.getFavouriteEvents(context,),
-                builder: (context, snapshot){
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return Center(child: CircularProgressIndicator(),);
-              }
-              if(snapshot.hasError){
-                return Center(child: Text(snapshot.error.toString()),);
-              }
-              List<EventModel> favouriteEvents = snapshot.data!;
-              return  Expanded(
-                child: ListView.separated(
+            CustomTextFormField(
+              hintText: appLocalizations.search_for_event,
+              suffixIcon: Icon(Icons.search),
+            ),
+            SizedBox(height: 16.h),
+            FutureBuilder(
+              future: FirebaseService.getFavouriteEvents(context),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+                List<EventModel> favouriteEvents = snapshot.data!;
+                return Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) => EventItem(
+                      onclick: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesManager.eventDetails,
+                          arguments: favouriteEvents[index],
+                        );
+                      },
+                      event: favouriteEvents[index],
+                      markAsFavourite: true,
+                    ),
 
-                  itemBuilder: (context, index) => EventItem(
-                    event: favouriteEvents[index],
-                    markAsFavourite: true,
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 16.h),
+                    itemCount: favouriteEvents.length,
                   ),
-
-                  separatorBuilder: (context, index)=>SizedBox(height: 16.h,),
-                  itemCount: favouriteEvents.length,
-                ),
-              );
-                })
-
-
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
-
-
 }

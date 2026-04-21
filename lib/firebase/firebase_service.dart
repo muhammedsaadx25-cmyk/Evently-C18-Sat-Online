@@ -74,6 +74,17 @@ static Future<void>addEventToFireStore(EventModel event, BuildContext context){
  return eventDocument.set(event);
  }
 
+ static Future<void> updateEvent(EventModel event, BuildContext context){
+   CollectionReference<EventModel> eventsCollection = getEventsCollection(context);
+   DocumentReference<EventModel> eventDocument = eventsCollection.doc(event.id);
+   return eventDocument.update(event.toJson());
+ }
+
+ static Future<void> deleteEvent(EventModel event, BuildContext context) {
+   CollectionReference<EventModel> eventsCollection = getEventsCollection(context);
+   return eventsCollection.doc(event.id).delete();
+ }
+
 
  static Future<List<EventModel>> getEventsFromFireStore(BuildContext context, [CategoryModel? selectedCategory])async{
    CollectionReference<EventModel> eventsCollection = getEventsCollection(context);

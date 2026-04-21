@@ -5,15 +5,28 @@ import 'package:evently_sat_online/model/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatefulWidget {
-   CustomTabBar({super.key, required this.categories,this.onCategoryItemClicked });
+   CustomTabBar({super.key, required this.categories,this.onCategoryItemClicked , this.selectedCategoryIndex = 0});
 List<CategoryModel> categories;
 void Function(CategoryModel)? onCategoryItemClicked;
+int selectedCategoryIndex ;
   @override
   State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
   int selectedIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    selectedIndex = widget.selectedCategoryIndex;
+
+  }
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
@@ -39,7 +52,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             unSelectedFgColor: ColorsManager.black,
             isSelected:
             widget.categories.indexOf(category) ==
-                selectedIndex,
+                widget.selectedCategoryIndex,
           ),
         )
             .toList(),

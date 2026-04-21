@@ -118,4 +118,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exhibition => 'Exhibition';
+
+  @override
+  String get event => 'Event';
 }

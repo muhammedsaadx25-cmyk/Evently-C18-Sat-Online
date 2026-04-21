@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EventItem extends StatefulWidget {
-   EventItem({super.key, required this.event, required this.markAsFavourite});
+   EventItem({super.key,required this.onclick, required this.event, required this.markAsFavourite});
   EventModel event;
   bool markAsFavourite;
+  void Function() onclick;
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -20,40 +21,43 @@ class _EventItemState extends State<EventItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+      onTap: widget.onclick,
+      child: Container(
 
-      width: double.infinity,
+        width: double.infinity,
 
-      decoration: BoxDecoration(
-borderRadius: BorderRadius.circular(16.r),
-        image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage(ImageAssets.meeting)),
-      ),
-      child:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            margin: REdgeInsets.all(8),
+        decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16.r),
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage(ImageAssets.meeting)),
+        ),
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              margin: REdgeInsets.all(8),
 
 
-            child: Padding(
-              padding:  REdgeInsets.all(8.0),
-              child: Text(widget.event.dateTime!.getMonth, style: Theme.of(context).textTheme.titleSmall,),
+              child: Padding(
+                padding:  REdgeInsets.all(8.0),
+                child: Text(widget.event.dateTime!.getMonth, style: Theme.of(context).textTheme.titleSmall,),
+              ),
             ),
-          ),
-          SizedBox(height: 97.h,),
-          Card(
-            margin: REdgeInsets.all(8),
-            child: Padding(
-              padding:  REdgeInsets.all(8.0),
-              child: Row(children: [
-                Expanded(child: Text(widget.event.title?? "", style: Theme.of(context).textTheme.titleMedium,)),
-               IconButton(onPressed: _markEventAsFavourite, icon: Icon(favourite ? Icons.favorite : Icons.favorite_border))
-              ],),
-            ),
-          )
-        ],
+            SizedBox(height: 97.h,),
+            Card(
+              margin: REdgeInsets.all(8),
+              child: Padding(
+                padding:  REdgeInsets.all(8.0),
+                child: Row(children: [
+                  Expanded(child: Text(widget.event.title?? "", style: Theme.of(context).textTheme.titleMedium,)),
+                 IconButton(onPressed: _markEventAsFavourite, icon: Icon(favourite ? Icons.favorite : Icons.favorite_border))
+                ],),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
