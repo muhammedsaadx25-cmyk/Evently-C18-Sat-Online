@@ -54,66 +54,68 @@ class _CreateEventState extends State<CreateEvent> {
       appBar: AppBar(
         title: Text(appLocalizations.add_event),
       ),
-      body: Padding(
-        padding:  REdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(16.r),
-                child: Image.asset(ImageAssets.meeting)),
-            SizedBox(height: 16.h,),
-
-            CustomTabBar(categories: CategoryModel.getCategories(context),onCategoryItemClicked: (newCategory){
-              setState(() {
-              selectedCategory = newCategory;
-
-              });
-              print(newCategory.name);
-            },),
-            SizedBox(height: 16.h,),
-            Text(appLocalizations.title, style: Theme.of(context).textTheme.displayLarge,),
-            SizedBox(height: 8.h,),
-            CustomTextFormField(
-                controller: _titleController,
-                hintText: appLocalizations.event_title),
-            SizedBox(height: 16.h,),
-            Text(appLocalizations.description, style: Theme.of(context).textTheme.displayLarge,),
-            SizedBox(height: 8.h,),
-            CustomTextFormField(
-              controller: _descriptionController,
-              hintText: appLocalizations.event_description, maxLines: 4,),
-SizedBox(height: 16.h,),
-            Row(
-              children: [
-                Icon(Icons.date_range_outlined),
-                SizedBox(width: 4.w,),
-                Text(selectedDateTime.getFormattedDate, style: Theme.of(context).textTheme.displayLarge,),
-                Spacer(),
-                CustomTextButton(
-                  title: appLocalizations.choose_date, onTap: _selectEventData
-                   ,)
-              ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding:  REdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+        
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: Image.asset(ImageAssets.meeting)),
+              SizedBox(height: 16.h,),
+        
+              CustomTabBar(categories: CategoryModel.getCategories(context),onCategoryItemClicked: (newCategory){
+                setState(() {
+                selectedCategory = newCategory;
+        
+                });
+                print(newCategory.name);
+              },),
+              SizedBox(height: 16.h,),
+              Text(appLocalizations.title, style: Theme.of(context).textTheme.displayLarge,),
+              SizedBox(height: 8.h,),
+              CustomTextFormField(
+                  controller: _titleController,
+                  hintText: appLocalizations.event_title),
+              SizedBox(height: 16.h,),
+              Text(appLocalizations.description, style: Theme.of(context).textTheme.displayLarge,),
+              SizedBox(height: 8.h,),
+              CustomTextFormField(
+                controller: _descriptionController,
+                hintText: appLocalizations.event_description, maxLines: 4,),
+        SizedBox(height: 16.h,),
+              Row(
+                children: [
+                  Icon(Icons.date_range_outlined),
+                  SizedBox(width: 4.w,),
+                  Text(selectedDateTime.getFormattedDate, style: Theme.of(context).textTheme.displayLarge,),
+                  Spacer(),
+                  CustomTextButton(
+                    title: appLocalizations.choose_date, onTap: _selectEventData
+                     ,)
+                ],
+              ),
+              SizedBox(height: 20.h,),
+              Row(
+                children: [
+                  Icon(Icons.access_time),
+                  SizedBox(width: 4.w,),
+                  Text(selectedDateTime.getFormattedTime, style: Theme.of(context).textTheme.displayLarge,),
+                  Spacer(),
+                  CustomTextButton(title: appLocalizations.choose_time, onTap: _chooseEventTime,)
+        
+                ],
+        
+        
             ),
-            SizedBox(height: 20.h,),
-            Row(
-              children: [
-                Icon(Icons.access_time),
-                SizedBox(width: 4.w,),
-                Text(selectedDateTime.getFormattedTime, style: Theme.of(context).textTheme.displayLarge,),
-                Spacer(),
-                CustomTextButton(title: appLocalizations.choose_time, onTap: _chooseEventTime,)
-
-              ],
-
-
-    ),
-
-            SizedBox(height: 24,),
-            CustomElevatedButton(title: "Add Event", onClick: _addEvent,)
-
-          ],
+        
+              SizedBox(height: 24,),
+              CustomElevatedButton(title: "Add Event", onClick: _addEvent,)
+        
+            ],
+          ),
         ),
       ),
     );

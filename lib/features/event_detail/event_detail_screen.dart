@@ -1,5 +1,6 @@
 import 'package:evently_sat_online/core/ex/date_ex.dart';
 import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
+import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +62,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               : Container(),
           UserModel.currentUser!.id == widget.event.ownerId
               ? IconButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    await FirebaseService.deleteEvent(event, context);
+                    if(!mounted) return;
+                    Navigator.pop(context);
+                  },
                   icon: Container(
                     padding: EdgeInsets.all(3),
                     decoration: BoxDecoration(
